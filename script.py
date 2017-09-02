@@ -102,6 +102,7 @@ def main():
                                         src_note_login = login
 
                                         login_found = False
+                                        whole_comment_content = ''
                                         for dst_note in comment.text.split("//////////////"):
                                             if re.search(r'\S+', dst_note) != None:
                                                 if dst_note.split(' ', 1)[0][-1] == ':':
@@ -109,8 +110,9 @@ def main():
                                                     dst_note_login = dst_note_login.strip()
                                                     if dst_note_login == src_note_login:
                                                         login_found = True
-                                                        dst_note = src_note
-                                                        break
+                                                        comment.text = whole_comment_content + "//////////////\n\n" + src_note_login + ": " + src_note
+                                                        dst_note = ''
+                                            whole_comment_content += dst_note                                            
 
                                         if not login_found:
                                             comment.text += "\n\n//////////////\n\n" + src_note_login + ": " + src_note.strip()
